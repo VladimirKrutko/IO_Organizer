@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ProjectTreeState projectID="bXo188GGAqDGAQkb" projectPath="E:\IO\IO_Organizer\project_documentation\Uaaer_map (1).vpp">
-	<TreeState name="ModelRepository" viewX="0" viewY="0"/>
-	<TreeState name="DiagramNavigator" viewX="12" viewY="0">
+	<TreeState name="ModelRepository" viewX="0" viewY="0">
+		<ExpandedPath>ModelRepository</ExpandedPath>
+	</TreeState>
+	<TreeState name="DiagramNavigator" viewX="0" viewY="1350">
 		<ExpandedPath>DiagramNavigator</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,UML Diagrams</ExpandedPath>
 		<ExpandedPath>UseCaseDiagram</ExpandedPath>
@@ -13,6 +15,7 @@
 		<ExpandedPath>DiagramNavigator,Enterprise Architecture</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,Project Management</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,SoaML</ExpandedPath>
+		<ExpandedPath>SoaMLServicesArchitectureDiagram</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,Impact Analysis</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,Strategic Analysis</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,Process Map</ExpandedPath>
@@ -27,9 +30,11 @@
 		<ExpandedPath>DiagramNavigator,Network Design</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,General</ExpandedPath>
 		<ExpandedPath>DiagramNavigator,Others</ExpandedPath>
-		<SelectedPath>RequirementDiagram,PoWZz8GGAqDGAQ0i</SelectedPath>
+		<SelectedPath>SoaMLServicesArchitectureDiagram,MudWqCGGAqDGAQuT</SelectedPath>
 	</TreeState>
 	<TreeState name="ClassBrowser" viewX="0" viewY="0"/>
 	<TreeState name="LogicalView" viewX="0" viewY="0"/>
-	<TreeState name="DiagramBacklog" viewX="0" viewY="0"/>
+	<TreeState name="DiagramBacklog" viewX="0" viewY="0">
+		<SelectedPath>bXo188GGAqDGAQkb</SelectedPath>
+	</TreeState>
 </ProjectTreeState>
