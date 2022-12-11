@@ -1,0 +1,131 @@
+<html>
+    <head>
+        <title id="title">FastAPI Chat</title>
+    </head>
+    <style>
+html, body {
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    background-color: #36393f;
+}
+
+.messages-container {
+    width: 100%;
+    min-height: calc(100vh - 2vw - 34px);
+    max-height: calc(100vh - 2vw - 34px);
+    overflow: auto;
+}
+
+.input-container {
+    background-color: #36393f;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.input-container input {
+    padding: 10px;
+    margin: 1vw;
+    border-radius: 5px;
+    border: none;
+    width: calc(100vw - 4vw - 75px);
+    font-size: 14px;
+}
+
+.input-container button {
+    position: fixed;
+    padding: 10px;
+    margin: 1vw;
+    margin-left: 0px;
+    border-radius: 5px;
+    background-color: #7289da;
+    color: #fff;
+    font-size: 14px;
+    width: 75px;
+    border: none;
+    position: fixed;
+    right: 0;
+}
+
+.message {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: #2f3136;
+}
+
+.message:hover {
+    background-color: #3b3e45;
+}
+
+.message-username {
+    font-weight: bold;
+}
+
+.message-content {
+    font-size: 14px;
+}
+    </style>
+    <body>
+        <div id="messages" class="messages-container"></div>
+        <div class="input-container">
+            <input type="text" id="message" placeholder="Type your message here...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+        <script>
+
+
+
+            var ws = null;
+
+            openChat();
+
+            var input = document.getElementById('message');
+
+            input.addEventListener('keydown', function(event) {
+                // Check if the Enter key was pressed
+                if (event.keyCode === 13) {
+                    sendMessage();
+                }
+            })
+
+            function openChat() {
+                var subprotocol = prompt("Enter chat name:");
+                document.getElementById("title").innerText = `Connected to: ${subprotocol}`
+                ws = new WebSocket("ws://localhost:8000/chat", subprotocol);
+                ws.onmessage = function(event) {
+                    var data = JSON.parse(event.data)
+                    var messages = document.getElementById("messages");
+                    var message = document.createElement("div");
+                    message.className = "message";
+                    var username = document.createElement("div");
+                    username.innerText = data.user;
+                    username.className = "message-username"
+                    var content = document.createElement("div");
+                    content.innerText = data.message;
+                    content.className = "message-content"
+                    message.appendChild(username);
+                    message.appendChild(content);
+                    if (data.end) {
+                        messages.appendChild(message);
+                    } else {
+                        messages.insertBefore(newElement, messages.firstChild);
+                    }
+                    messages.scrollTop = messages.scrollHeight;
+                };
+            }
+
+            function sendMessage() {
+                var input = document.getElementById("message");
+                var data = {
+                    message: input.value,
+                    type: "message"
+                }
+                ws.send(JSON.stringify(data));
+                input.value = "";
+            }
+        </script>
+    </body>
+</html>
