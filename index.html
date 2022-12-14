@@ -28,9 +28,9 @@ body {
 .input-container input {
     padding: 10px;
     margin: 1vw;
-    border-radius: 5px;
+    border-radius: 7px 0px 0px 7px;
     border: none;
-    width: calc(100vw - 4vw - 75px);
+    width: calc(100vw - 2vw - 75px);
     font-size: 14px;
 }
 
@@ -39,7 +39,7 @@ body {
     padding: 10px;
     margin: 1vw;
     margin-left: 0px;
-    border-radius: 5px;
+    border-radius: 0px 7px 7px 0px;
     background-color: #7289da;
     color: #fff;
     font-size: 14px;
@@ -92,9 +92,7 @@ body {
             })
 
             function openChat() {
-                var subprotocol = prompt("Enter chat name:");
-                document.getElementById("title").innerText = `Connected to: ${subprotocol}`
-                ws = new WebSocket("ws://localhost:8000/chat", subprotocol);
+                ws = new WebSocket("ws://{{host}}/chat", "{{server}}|{{user}}");
                 ws.onmessage = function(event) {
                     var data = JSON.parse(event.data)
                     var messages = document.getElementById("messages");

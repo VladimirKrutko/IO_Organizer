@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.websockets import WebSocket, WebSocketDisconnect
 
@@ -49,25 +49,29 @@ def get_messages_before(server, message_id, count=25):
 
 app = FastAPI()
 
-@app.get("/")
-async def get_index():
-    return HTMLResponse(open("./index.html", "r").read())
+@app.get("/{server}/{user}")
+async def get_index(request: Request, server: str, user: str):
+    host = str(request.base_url).split("//")[1].split("/")[0]
+    print(host)
+    template = open("./index.html", "r").read()
+    
+    return HTMLResponse(template.replace("{{host}}", host).replace("{{server}}", server).replace("{{user}}", user))
 
-subprotocols: dict[bytes, list[WebSocket]] = {}
+servers: dict[bytes, list[WebSocket]] = {}
 
 @app.websocket("/chat")
 async def chat(websocket: WebSocket):
     await websocket.accept()
 
-    subprotocol = websocket.headers.get("sec-websocket-protocol")
-    if subprotocol is None:
-        subprotocol = "default"
+    server, user = websocket.headers.get("sec-websocket-protocol").split("|")
+    if server is None:
+        server = "default"
 
-    if subprotocol not in subprotocols:
-        subprotocols[subprotocol] = []
-    subprotocols[subprotocol].append(websocket)
+    if server not in servers:
+        servers[server] = []
+    servers[server].append(websocket)
 
-    last = get_last_messages(subprotocol)
+    last = get_last_messages(server)
     print(last)
     for item in last:
         await websocket.send_json({"user": item[2], "message": item[3], "end": True})
@@ -76,12 +80,12 @@ async def chat(websocket: WebSocket):
         while True:
             data = await websocket.receive_json()
             if data["type"] == "message":
-                for client in subprotocols[subprotocol]:
-                    add_message(subprotocol, str(websocket.client), data["message"])
-                    await client.send_json({"user": str(websocket.client), "message": data["message"], "end": True})
+                add_message(server, user, data["message"])
+                for client in servers[server]:
+                    await client.send_json({"user": user, "message": data["message"], "end": True})
             else:
-                for message in get_messages_before(subprotocol, data["message_id"]):
+                for message in get_messages_before(server, data["message_id"]):
                     await websocket.send_json({"user": message[2], "message": message[3], "end": False})
     except WebSocketDisconnect:
-        subprotocols[subprotocol].remove(websocket)
+        servers[server].remove(websocket)
         await websocket.close()
