@@ -1,0 +1,115 @@
+@startuml "Class diagram" 
+
+folder project #lightcyan {
+    folder pm as "Project management" #lightblue {
+        class Project {
+            -ID : long
+            +title : string
+            +desctiption : string
+            +sectrions : Section[] = []
+            +showProject() : void
+            +showProjectInfo() : void
+            +moveTask(task : Task, from : Section, to : Section) : void
+        }
+
+        class UserManagement {
+            +getPermissions(projectID : long, userID : long) : void
+            +setPermissions(projectID : long, userID : long, permission : string, isSet : bool) : void
+            +removeUser(projectID : long, userID : long) : void
+            +isAdmin(projectID : long, userID : long) : bool
+            +addUser(projectID : long, userID : long) : void
+        }
+
+        class Section {
+            -ID : long
+            +title : string
+            +description : string
+            +tasks : Task[] = []
+            +showTaskList() : void
+            +addTask(task : Task) : void
+            +removeTask(id : long) : void
+            +showInfo() : void
+        }
+
+        class Task {
+            -ID : long
+            +title : string
+            +description : string
+            +deadline : datetime
+            +priority : int
+            +completed : bool = false
+            +changeCompletion() : void
+            +createPushNotification(notificationTime : datetime) : void
+            +sendPushNotification(userID : long) : void
+        }
+
+        class Calendar {
+            +getMonthlyTasks() : void
+            +showCalendar() : void
+        }
+
+        Project o-right- Section
+        UserManagement o-up- Project
+        Section o-- Task
+        Task o-- Calendar
+    }
+
+    folder Chat #lightblue {
+        top to bottom direction
+        class Server {
+            -clients : Client[] = []
+            +create_message(message : Message) : void
+            +fetch_messages(server : int) : Message[]
+        }
+
+        class Message {
+            -id : int
+            +username : string
+            +message : string
+        }
+
+        class Client {
+            -server : Server
+            -username : string
+            +send_message(username : string, message : string) : void
+            +show_message(message : Message) : void
+            +fetch_messages(server : int) : Message[]
+        }
+
+        Server o-down- Message
+        Message -down-o Client
+    }
+
+    class Database {
+        -dbAddress : string
+        -dbPort : int
+        -dbUser : string
+        -dbPass : string
+        -dbName : string
+        +updateRecord(query : string) : void
+        +createTable(query : string) : void
+        +createRecord(query : string) : void
+    }
+
+    class Organiser {
+        +Organiser() : Self
+        +mainloop() : void
+    }
+
+    class User {
+        -userID : long
+        -email : string
+        -password : string
+        +login(email : string, pass : string) : bool
+        +logout() : void
+        +register(email : string, pass : string) : bool
+        +changePassword(userId : long, password : string) : bool
+    }
+
+    Organiser o-right- User
+    Database o-right- Organiser
+    Database o-down- Project
+    Database o-- Server
+}
+
+@enduml
