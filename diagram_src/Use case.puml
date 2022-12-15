@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @startuml "Use case diagram"
 left to right direction
 actor User #lightblue
@@ -29,7 +30,7 @@ User -- mp
 ct ~~> mp : <<extend>>
 pr ~~> mp : <<extend>>
 mup ~~> mp : <<extend>>
-au ~~> mup
+au ~~> mup : <<include>>
 User -- mt
 User -- Calendar
 mt <~~ pn : <<include>>
@@ -38,3 +39,45 @@ User -- Chat
 Chat -- Database
 
 @enduml
+=======
+@startuml "Use case diagram"
+left to right direction
+actor User #lightblue
+actor Database #lightblue
+package "Use case" #lightblue {
+    usecase Login
+    usecase ca as "Create account"
+    usecase mp as "Manage project
+        ---
+        <b>extension points
+        ExtensionPoint
+        Manage user permissions
+        Get project process raport
+    "
+    usecase ct as "CRUD tasks"
+    usecase pr as "Project raport"
+    usecase mup as "Manage user permissions"
+    usecase au as "Add user"
+    usecase Chat
+    usecase mt as "Manage tasks"
+    usecase Calendar
+    usecase pn as "Push notifications"
+}
+User -- Login
+Login ~~> ca : <<include>>
+ca -- Database
+mp -- Database
+User -- mp
+ct ~~> mp : <<extend>>
+pr ~~> mp : <<extend>>
+mup ~~> mp : <<extend>>
+au ~~> mup : <<include>>
+User -- mt
+User -- Calendar
+mt <~~ pn : <<include>>
+Calendar <~~ pn : <<include>>
+User -- Chat
+Chat -- Database
+
+@enduml
+>>>>>>> 818d6c59950bf4b8e948e7e1690328683e944f60

@@ -1,0 +1,372 @@
+<<<<<<< HEAD
+@startuml "Requirement diagram"
+
+<style>
+object {
+    BackgroundColor: lightgreen
+}
+</style>
+
+object "Registration" as Reg {
+    Text = ""
+    ID = "REQ001.REQ002.REQ003"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Test"
+    risk = "High"
+    status = "Approved"
+}
+
+object "Log in" as Log {
+    Text = ""
+    ID = "REQ001.REQ002"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Test"
+    risk = "High"
+    status = "Approved"
+}
+
+object "Access to the service" as Access {
+    Text = ""
+    ID = "REQ001"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Test"
+    risk = "High"
+    status = "Approved"
+}
+
+object "Chat" as Chat {
+    Text = ""
+    ID = "REQ014"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Analysis"
+    risk = "Low"
+    status = "Approved"
+}
+
+object "Send Attachment" as SendAtt {
+    Text = ""
+    ID = "REQ016"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Inspection"
+    risk = "Low"
+    status = "Approved"
+}
+
+object "Send Message" as SendMes {
+    Text = ""
+    ID = "REQ015"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Test"
+    risk = "Low"
+    status = "Approved"
+}
+
+object "Dashboard" as Dash {
+    Text = ""
+    ID = "REQ004"
+    source = ""
+    kind = "Interface"
+    verifyMethod = "Demonstration"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Calendar" as Cal {
+    Text = ""
+    ID = "REQ011"
+    source = ""
+    kind = "Interface"
+    verifyMethod = "Demonstration"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Notification" as Notif {
+    Text = ""
+    ID = "REQ012"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Demonstration"
+    risk = "Low"
+    status = "Approved"
+}
+
+object "Update project" as Update {
+    Text = ""
+    ID = "REQ005"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Demonstration"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Edit tasks" as Edit {
+    Text = ""
+    ID = "REQ009"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Test"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Create tasks" as CreateT {
+    Text = ""
+    ID = "REQ009.REQ010"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Test"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Create project" as CreateP {
+    Text = ""
+    ID = "REQ005.REQ006"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Test"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Manage project permissions" as Manage {
+    Text = ""
+    ID = "REQ017"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Inspection"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Change user permissions" as Change {
+    Text = ""
+    ID = "REQ019"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Inspection"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Add new user" as Add {
+    Text = ""
+    ID = "REQ018"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Inspection"
+    risk = "Medium"
+    status = "Approved"
+}
+
+Reg -left-+ Log
+Log -left-+ Access
+Access .left.> Chat
+Access .down.> Dash
+Chat .left.> SendAtt
+Chat .down.> SendMes
+Dash .down.> Cal
+Dash .right.> Update
+Cal .down.> Notif
+Update .down.> Edit
+Update +.right. CreateP
+Update .right.> Manage
+Edit +.down. CreateT
+Manage .down.> Change
+Manage .right.> Add
+
+=======
+@startuml "Requirement diagram"
+
+<style>
+object {
+    BackgroundColor: lightgreen
+}
+</style>
+
+object "Registration" as Reg {
+    Text = ""
+    ID = "REQ001.REQ002.REQ003"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Test"
+    risk = "High"
+    status = "Approved"
+}
+
+object "Log in" as Log {
+    Text = ""
+    ID = "REQ001.REQ002"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Test"
+    risk = "High"
+    status = "Approved"
+}
+
+object "Access to the service" as Access {
+    Text = ""
+    ID = "REQ001"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Test"
+    risk = "High"
+    status = "Approved"
+}
+
+object "Chat" as Chat {
+    Text = ""
+    ID = "REQ014"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Analysis"
+    risk = "Low"
+    status = "Approved"
+}
+
+object "Send Attachment" as SendAtt {
+    Text = ""
+    ID = "REQ016"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Inspection"
+    risk = "Low"
+    status = "Approved"
+}
+
+object "Send Message" as SendMes {
+    Text = ""
+    ID = "REQ015"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Test"
+    risk = "Low"
+    status = "Approved"
+}
+
+object "Dashboard" as Dash {
+    Text = ""
+    ID = "REQ004"
+    source = ""
+    kind = "Interface"
+    verifyMethod = "Demonstration"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Calendar" as Cal {
+    Text = ""
+    ID = "REQ011"
+    source = ""
+    kind = "Interface"
+    verifyMethod = "Demonstration"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Notification" as Notif {
+    Text = ""
+    ID = "REQ012"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Demonstration"
+    risk = "Low"
+    status = "Approved"
+}
+
+object "Update project" as Update {
+    Text = ""
+    ID = "REQ005"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Demonstration"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Edit tasks" as Edit {
+    Text = ""
+    ID = "REQ009"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Test"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Create tasks" as CreateT {
+    Text = ""
+    ID = "REQ009.REQ010"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Test"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Create project" as CreateP {
+    Text = ""
+    ID = "REQ005.REQ006"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Test"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Manage project permissions" as Manage {
+    Text = ""
+    ID = "REQ017"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Inspection"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Change user permissions" as Change {
+    Text = ""
+    ID = "REQ019"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Inspection"
+    risk = "Medium"
+    status = "Approved"
+}
+
+object "Add new user" as Add {
+    Text = ""
+    ID = "REQ018"
+    source = ""
+    kind = "Functional"
+    verifyMethod = "Inspection"
+    risk = "Medium"
+    status = "Approved"
+}
+
+Reg -left-+ Log
+Log -left-+ Access
+Access .left.> Chat
+Access .down.> Dash
+Chat .left.> SendAtt
+Chat .down.> SendMes
+Dash .down.> Cal
+Dash .right.> Update
+Cal .down.> Notif
+Update .down.> Edit
+Update +.right. CreateP
+Update .right.> Manage
+Edit +.down. CreateT
+Manage .down.> Change
+Manage .right.> Add
+
+>>>>>>> 818d6c59950bf4b8e948e7e1690328683e944f60
+@enduml
