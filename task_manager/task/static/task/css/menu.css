@@ -1,25 +1,40 @@
-ul {
-  list-style: none; /*убираем маркеры списка*/
-  margin: 0; /*убираем отступы*/
-  padding-left: 0; /*убираем отступы*/
-  margin-top:25px; /*делаем отступ сверху*/
-}
-a {
-  text-decoration: none; /*убираем подчеркивание текста ссылок*/
-  background:#30A8E6; /*добавляем фон к пункту меню*/
-  color:#fff; /*меняем цвет ссылок*/
-  padding:10px; /*добавляем отступ*/
-  font-family: arial; /*меняем шрифт*/
-  border-radius:4px; /*добавляем скругление*/
-  -moz-transition: all 0.3s 0.01s ease; /*делаем плавный переход*/
-  -o-transition: all 0.3s 0.01s ease;
-  -webkit-transition: all 0.3s 0.01s ease;
-}
-a:hover {
-  background:#1C85BB;/*добавляем эффект при наведении*/
-}
-li {
-  float:left; /*Размещаем список горизонтально для реализации меню*/
-  margin-right:5px; /*Добавляем отступ у пунктов меню*/
 
+.two ul {
+  background: #D4E7EE;
+  overflow: hidden;
+  padding: 0;
+}
+.two li {
+  float: left;
+}
+.two a {
+  display: block;
+  padding: 1em;
+  border-right: 1px solid #ADC0CE;
+  background: rgba(173, 192, 206, .3);
+  color: #29838C;
+}
+.two a:hover {background: #ADC0CE}
+.three ul {
+  padding: 0;
+  background: #E4EFD1;
+}
+
+.d1 h3 {
+  color: #F16246;
+  text-align: center;
+}
+.d1 h3:before {
+  content: "";
+  position: absolute;
+  top: calc(50% - 1px);
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #E5EDEA;
+  z-index: -1;
+}
+.d1 span {
+  background: white;
+  padding: 0 20px;
 }

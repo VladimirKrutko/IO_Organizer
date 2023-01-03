@@ -3,18 +3,22 @@
 <html lang="en">
 <head>
 
-    <div class=ex5><h1>Task Manager</h1></div>
-    <link type="text/css" href="{% static 'task/css/title.css' %}" rel="stylesheet">
+    <div class="d1"><h3><span>Task Manger</span></h3></div>
+    <link type="text/css" href="{% static 'task/css/menu.css' %}" rel="stylesheet">
 </head>
 <body>
 <link type="text/css" href="{% static 'task/css/menu.css' %}" rel="stylesheet">
-<ul>
-<li><a href="#">Tasks</a></li>
-<li><a href="#">Profile</a></li>
-<li><a href="#">Settings</a></li>
-<li><a href="#">Login</a></li>
-</ul>
-
+<!--<ul class="full-width">-->
+<!--    {% for m in menu %}-->
+<!--    <li><a href="#">{{m}}</a></li>-->
+<!--    {%endfor%}-->
+<nav class="two">
+  <ul>
+    {% for m in menu %}
+      <li><a href="#">{{m}}</a></li>
+      {%endfor%}
+  </ul>
+</nav>
 
 </body>
 </html>
