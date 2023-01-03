@@ -1,0 +1,18 @@
+.ex5 h1:after {content: "";
+position: absolute;
+height: 2px;
+width: 100px;
+background:rgb(81, 227, 213);
+top: -40%;
+margin: 0 auto;
+left: 0;
+right: 0;}
+.ex5 h1:before {content: "";
+position: absolute;
+height: 2px;
+width: 100px;
+background:rgb(81, 227, 213);
+top: 140%;
+margin: 0 auto;
+left: 0;
+right: 0;}

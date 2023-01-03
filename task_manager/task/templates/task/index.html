@@ -1,9 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <h1>Task Manager</h1>
+
+    <div class=ex5><h1>Task Manager</h1></div>
+    <link type="text/css" href="{% static 'task/css/title.css' %}" rel="stylesheet">
 </head>
 <body>
+<link type="text/css" href="{% static 'task/css/menu.css' %}" rel="stylesheet">
 <ul>
 <li><a href="#">Tasks</a></li>
 <li><a href="#">Profile</a></li>
