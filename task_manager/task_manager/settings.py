@@ -91,13 +91,15 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': '1458',
         'HOST': 'localhost',
         'PORT': '5432',
     }
 }
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
+# docker run -e POSTGRES_PASSWORD=postgres -p 5432:5432 Postgres
+# docker run --name postgres_ts -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=1458 -p 5432:5432 -d postgres
 
 AUTH_PASSWORD_VALIDATORS = [
     {

@@ -47,8 +47,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
-    image_s3_path = models.CharField(max_length=200, null=True, blank=True, default=None)
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
@@ -78,6 +76,3 @@ class Team(models.Model):
     name = models.CharField(max_length=100)
     user_id = models.ManyToManyField(User)
 
-class UploadImage(models.Model):
-    name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to=name, blank=True, null=True)
