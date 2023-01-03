@@ -73,7 +73,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     #     }, settings.SECRET_KEY, algorithm='HS256')
     #
     #     return token
-
+class Team(models.Model):
+    teaam_id = models.IntegerField(primary_key=True, auto_created=True)
+    name = models.CharField(max_length=100)
+    user_id = models.ManyToManyField(User)
 
 class UploadImage(models.Model):
     name = models.CharField(max_length=100)
