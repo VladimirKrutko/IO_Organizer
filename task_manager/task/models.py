@@ -1,43 +1,44 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
-from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 
 
 # Create your models here.
 class UserManager(BaseUserManager):
+    def create_user(self, email, password=None):
+        if not email:
+            raise ValueError('Users must have an email address')
 
-    def create_user(self, username, email, password, role='user'):
-        user = self.model(username=username, email=email, role=role)
+        user = self.model(
+            email=self.normalize_email(email),
+        )
+
         user.set_password(password)
-        user.save()
-
+        user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, email, password):
-        user = self.create_user(username, email, password, 'admin')
-        user.is_superuser = True
-        user.is_staff = True
-        user.save()
-
+    def create_superuser(self, email, password):
+        user = self.create_user(
+            email,
+            password=password,
+        )
+        user.staff = True
+        user.admin = True
+        user.save(using=self._db)
         return user
 
 
-class User(AbstractBaseUser, PermissionsMixin):
-    """
-    User model in innoter project
-    """
+class User(AbstractBaseUser):
+    email = models.EmailField(
+        verbose_name='email address',
+        max_length=255,
+        unique=True,
+    )
+    is_active = models.BooleanField(default=True)
+    staff = models.BooleanField(default=False)
+    admin = models.BooleanField(default=False)
 
-    email = models.EmailField(unique=True)
-    username = models.CharField(max_length=200)
-    is_staff = models.BooleanField(default=False)
-    is_admin = models.BooleanField(default=False)
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
-
     objects = UserManager()
-
-    def __str__(self) -> models.EmailField:
-        return self.email
 
 
 class Team(models.Model):
