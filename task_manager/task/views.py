@@ -17,15 +17,15 @@ def index(request):
 
 def register_request(response):
     if response.method == "POST":
-        form = RegisterForm(response.POST)
+        form = AddUserForm(response.POST)
         if form.is_valid():
             form.save()
 
         return redirect("/home")
     else:
-        form = RegisterForm()
+        form = AddUserForm()
 
-    return render(response, "register/register.html", {"form": form})
-    return render(request=request, template_name="task/register.html", context={"register_form": form, 'menu': MENU})
+    # return render(response, "register/register.html", {"form": form})
+    return render(request=response, template_name="task/register.html", context={"register_form": form, 'menu': MENU})
 
     # return render(request=request, template_name="task/register.html", context={"register_form": form, 'menu': MENU})
