@@ -53,7 +53,7 @@ class User(AbstractBaseUser):
     )
     username = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
-    staff = models.BooleanField(default=False) # a admin user; non super-user
+    staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
     objects = UserManager()
     USERNAME_FIELD = 'email'
