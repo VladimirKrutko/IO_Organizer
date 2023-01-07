@@ -1,0 +1,13 @@
+{% extends 'task/base.html' %}
+
+{% block content %}
+    <h1>Home page</h1>
+    <hr>
+
+    {% if user.is_authenticated %}
+<h1> user: User</h1>
+        <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+<a href="{ url 'login' }">login</a>
+    {% endif %}
+{% endblock %}

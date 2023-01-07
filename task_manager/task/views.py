@@ -7,7 +7,6 @@ from django.contrib.auth import get_user_model
 
 from .forms import AddUserForm
 
-# Create your views here.
 MENU = ['Tasks', 'Settings', 'Profile', 'Sign in', 'Sign out']
 
 

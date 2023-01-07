@@ -1,10 +1,13 @@
-from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
+
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
 
 
-# Create your models here.
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
+        """
+        Creates and saves a User with the given email and password.
+        """
         if not email:
             raise ValueError('Users must have an email address')
 
@@ -16,7 +19,22 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    def create_staffuser(self, email, password):
+        """
+        Creates and saves a staff user with the given email and password.
+        """
+        user = self.create_user(
+            email,
+            password=password,
+        )
+        user.staff = True
+        user.save(using=self._db)
+        return user
+
     def create_superuser(self, email, password):
+        """
+        Creates and saves a superuser with the given email and password.
+        """
         user = self.create_user(
             email,
             password=password,
@@ -26,19 +44,21 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-
+# Create your models here.
 class User(AbstractBaseUser):
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
         unique=True,
     )
+    username = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
-    staff = models.BooleanField(default=False)
+    staff = models.BooleanField(default=False) # a admin user; non super-user
     admin = models.BooleanField(default=False)
-
-    USERNAME_FIELD = 'email'
     objects = UserManager()
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
 
 
 class Team(models.Model):
