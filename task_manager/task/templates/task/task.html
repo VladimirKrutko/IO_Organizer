@@ -1,0 +1,27 @@
+{% extends "task/base.html" %}
+
+{% block content %}
+ <a href="#">Create task</a>
+
+{% if user.is_authenticated %}
+<table border = "1" cellpadding = "5" cellspacing = "5">
+    <td>Start Date</td>
+    <td>Content</td>
+    <td>Executor</td>
+    <td>Status</td>
+    {% for i in data%}
+
+    <tr>
+        <td>{{i.create_date}}</td>
+        <td>{{i.content}}</td>
+        <td>{{i.executor}}</td>
+        <td>{{i.status}}</td>
+    </tr>
+
+    {% endfor %}
+</table>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a> |
+        <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+{% endblock %}
