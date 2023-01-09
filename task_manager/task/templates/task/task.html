@@ -1,11 +1,12 @@
 {% extends "task/base.html" %}
 
 {% block content %}
- <a href="#">Create task</a>
+ <a href="{% url 'create_task'  %}">Create task</a>
 
 {% if user.is_authenticated %}
 <table border = "1" cellpadding = "5" cellspacing = "5">
     <td>Start Date</td>
+    <td>End Date</td>
     <td>Content</td>
     <td>Executor</td>
     <td>Status</td>
@@ -13,9 +14,12 @@
 
     <tr>
         <td>{{i.create_date}}</td>
+        <td>{{i.end_data}}</td>
         <td>{{i.content}}</td>
         <td>{{i.executor}}</td>
         <td>{{i.status}}</td>
+        <td><a href="{% url 'update_task' i.id %}">Update</a></td>
+        <td><a href="{% url 'delete_task' i.id %}">Delete</a></td>
     </tr>
 
     {% endfor %}

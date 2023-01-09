@@ -15,7 +15,17 @@ class CreateTaskForm(forms.Form):
     executor = forms.CharField(max_length=100)
     status = forms.ChoiceField(choices=STATUS_CHOICES)
     content = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))
+    end_date = forms.CharField(max_length=100)
 
+
+class UpdateTaskForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ['executor', 'status', 'content', 'end_data']
+        label = {
+            'executor_id': 'executor',
+            'end_data': 'end_date',
+        }
 
     # class Meta:
     #     model = Task
@@ -24,6 +34,7 @@ class CreateTaskForm(forms.Form):
     #         'executor': forms.TextInput(attrs={'class': 'form-input'}),
     #         'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
     #     }
+
 
 class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(

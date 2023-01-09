@@ -1,5 +1,6 @@
-from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.db import models
+from django.utils import timezone
+from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 
 
 class UserManager(BaseUserManager):
@@ -73,7 +74,7 @@ class Task(models.Model):
         ('D', 'Done'),
         ('P', 'Femme'),
         ('S', 'Stop'))
-    end_data = models.DateTimeField(auto_now_add=True)
+    end_data = models.DateTimeField(default=timezone.now)
     content = models.TextField()
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now_add=True)
