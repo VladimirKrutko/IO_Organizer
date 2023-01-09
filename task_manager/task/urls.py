@@ -6,6 +6,7 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('register', Register.as_view(), name='register'),
     path('create_task', TaskView.as_view(), name='create_task'),
+    path('create_team', CreateTeamView.as_view(), name='create_team'),
     path('show_task', get_user_task, name='task'),
     path('task/<int:id>/', TaskView.as_view(), name='task'),
     path('update_task/<int:pk>/', UpdateTaskView.as_view(), name='update_task'),

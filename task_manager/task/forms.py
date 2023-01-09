@@ -7,6 +7,11 @@ from django.utils.translation import gettext_lazy as _
 User = get_user_model()
 
 
+class CreateTeamForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    user = forms.CharField(max_length=100)
+
+
 class CreateTaskForm(forms.Form):
     STATUS_CHOICES = (
         ('D', 'Done'),

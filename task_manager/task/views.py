@@ -1,8 +1,8 @@
 from django.contrib.auth import authenticate, login
 from django.views import View
 from django.shortcuts import render, redirect
-from .forms import CreateTaskForm, UserRegistrationForm, UpdateTaskForm
-from .models import Task, User
+from .forms import CreateTaskForm, UserRegistrationForm, UpdateTaskForm, CreateTeamForm
+from .models import Task, User, Team
 from datetime import datetime
 
 MENU = ['Tasks', 'Settings', 'Profile', 'Sign in', 'Sign out']
@@ -10,6 +10,36 @@ MENU = ['Tasks', 'Settings', 'Profile', 'Sign in', 'Sign out']
 
 def index(request):
     return render(request, 'task/base.html', {'menu': MENU})
+
+
+class CreateTeamView(View):
+    template_name = 'task/create_team.html'
+
+    def get(self, request):
+        context = {
+            'form': CreateTeamForm()
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        print('psot')
+        form = CreateTeamForm(request.POST)
+        print(form.is_valid())
+        if form.is_valid():
+            name = form.cleaned_data.get('name')
+            email = form.cleaned_data.get('user')
+            user = User.objects.get(email=email)
+            team = Team(name=name)
+            team.save()
+            team.user_id.add(user)
+            team.save()
+            print(f"test {team}")
+
+            return redirect('home')
+        context = {
+            'form': form
+        }
+        return render(request, self.template_name, context)
 
 
 def delete_task(request, pk):
