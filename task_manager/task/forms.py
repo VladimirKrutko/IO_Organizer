@@ -7,16 +7,25 @@ from django.utils.translation import gettext_lazy as _
 User = get_user_model()
 
 
-class CreateTaskForm(forms.ModelForm):
-    class Meta:
-        model = Task
-        fields = ['content', 'executor', 'status']
-        widgets = {
-            'executor': forms.TextInput(attrs={'class': 'form-input'}),
-            'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
-        }
+class CreateTaskForm(forms.Form):
+    STATUS_CHOICES = (
+        ('D', 'Done'),
+        ('F', 'Femme'),
+        ('S', 'Stop'))
+    executor = forms.CharField(max_length=100)
+    status = forms.ChoiceField(choices=STATUS_CHOICES)
+    content = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))
 
-class UserCreationForm(UserCreationForm):
+
+    # class Meta:
+    #     model = Task
+    #     fields = ['content', 'executor', 'status']
+    #     widgets = {
+    #         'executor': forms.TextInput(attrs={'class': 'form-input'}),
+    #         'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
+    #     }
+
+class UserRegistrationForm(UserCreationForm):
     email = forms.EmailField(
         label=_("Email"),
         max_length=254,

@@ -1,15 +1,30 @@
-from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.views import View
 from django.shortcuts import render, redirect
-from .forms import UserCreationForm, CreateTaskForm
-from  .models import Task
+from .forms import CreateTaskForm, UserRegistrationForm
+from .models import Task, User
 
 MENU = ['Tasks', 'Settings', 'Profile', 'Sign in', 'Sign out']
 
 
 def index(request):
     return render(request, 'task/base.html', {'menu': MENU})
+
+
+def update_task(request, pk):
+    form = CreateTaskForm()
+    context = {
+        'form': form
+    }
+
+    return redirect('task')
+
+def get_user_task(request):
+    tasks = [task.__dict__ for task in Task.objects.filter(executor=request.user)]
+    for i in tasks:
+        i['executor'] = i['executor'].email
+
+    return render(request, 'task/task.html', {'data': tasks})
 
 
 class TaskView(View):
@@ -23,10 +38,11 @@ class TaskView(View):
 
     def post(self, request):
         form = CreateTaskForm(request.POST)
-        Task(form.data['content'], form.data['executor'], form.data['status']).save()
+        print(form.is_valid())
         if form.is_valid():
-
-            form.save()
+            executor = form.cleaned_data.get('executor')
+            user = User.objects.filter(email=executor)[0]
+            Task(content=form.cleaned_data.get('content'), executor=user, status=form.cleaned_data.get('status')).save()
             return redirect('home')
         context = {
             'form': form
@@ -39,12 +55,12 @@ class Register(View):
 
     def get(self, request):
         context = {
-            'form': UserCreationForm()
+            'form': UserRegistrationForm()
         }
         return render(request, self.template_name, context)
 
     def post(self, request):
-        form = UserCreationForm(request.POST)
+        form = UserRegistrationForm(request.POST)
 
         if form.is_valid():
             form.save()

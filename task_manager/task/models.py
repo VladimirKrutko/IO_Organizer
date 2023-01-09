@@ -59,9 +59,11 @@ class User(AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    def __str__(self):
+        return self.email
+
 
 class Team(models.Model):
-    teaam_id = models.IntegerField(primary_key=True, auto_created=True)
     name = models.CharField(max_length=100)
     user_id = models.ManyToManyField(User)
 
