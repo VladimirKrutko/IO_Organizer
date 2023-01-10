@@ -7,6 +7,10 @@ from django.utils.translation import gettext_lazy as _
 User = get_user_model()
 
 
+class UpdateTeamUserForm(forms.Form):
+    user = forms.CharField(max_length=100)
+
+
 class CreateTeamForm(forms.Form):
     name = forms.CharField(max_length=100)
     user = forms.CharField(max_length=100)
@@ -31,14 +35,6 @@ class UpdateTaskForm(forms.ModelForm):
             'executor_id': 'executor',
             'end_data': 'end_date',
         }
-
-    # class Meta:
-    #     model = Task
-    #     fields = ['content', 'executor', 'status']
-    #     widgets = {
-    #         'executor': forms.TextInput(attrs={'class': 'form-input'}),
-    #         'content': forms.Textarea(attrs={'cols': 60, 'rows': 10}),
-    #     }
 
 
 class UserRegistrationForm(UserCreationForm):

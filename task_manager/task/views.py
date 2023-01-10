@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.views import View
 from django.shortcuts import render, redirect
-from .forms import CreateTaskForm, UserRegistrationForm, UpdateTaskForm, CreateTeamForm
+from .forms import CreateTaskForm, UserRegistrationForm, UpdateTaskForm, CreateTeamForm, UpdateTeamUserForm
 from .models import Task, User, Team
 from datetime import datetime
 
@@ -11,16 +11,37 @@ MENU = ['Tasks', 'Settings', 'Profile', 'Sign in', 'Sign out']
 def index(request):
     return render(request, 'task/base.html', {'menu': MENU})
 
-    # tasks = [task.__dict__ for task in Task.objects.filter(executor=request.user)]
-    # for i in tasks:
-    #     i['executor'] = request.user.email
-    #
-    # return render(request, 'task/task.html', {'data': tasks})
+
+class AddUserTeamView(View):
+    template_name = 'task/add_user.html'
+
+    def get(self, request, pk):
+        context = {
+            'form': UpdateTeamUserForm(),
+            'pk': pk
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, pk):
+        form = UpdateTeamUserForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data.get('user')
+            user = User.objects.get(email=email)
+            team = Team.objects.get(id=pk)
+            team.user_id.add(user)
+            team.save()
+            return redirect('team')
+        context = {
+            'form': form,
+            'pk': pk,
+        }
+        return render(request, self.template_name, context)
 
 
 def get_team_info(request):
     teams = Team.objects.filter(user_id=request.user)
-    data = [{'name': team.name, 'users': [{'id': user.id, 'email': user.email} for user in team.user_id.all()]} for team in teams]
+    data = [{'name': team.name, 'id': team.id, 'users': [{'id': user.id, 'email': user.email}
+                                                         for user in team.user_id.all()]} for team in teams]
     return render(request, 'task/team.html', {'data': data})
 
 
@@ -34,9 +55,7 @@ class CreateTeamView(View):
         return render(request, self.template_name, context)
 
     def post(self, request):
-        print('psot')
         form = CreateTeamForm(request.POST)
-        print(form.is_valid())
         if form.is_valid():
             name = form.cleaned_data.get('name')
             email = form.cleaned_data.get('user')
@@ -45,11 +64,9 @@ class CreateTeamView(View):
             team.save()
             team.user_id.add(user)
             team.save()
-            print(f"test {team}")
-
             return redirect('home')
         context = {
-            'form': form
+            'form': form,
         }
         return render(request, self.template_name, context)
 
