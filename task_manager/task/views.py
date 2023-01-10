@@ -12,6 +12,14 @@ def index(request):
     return render(request, 'task/base.html', {'menu': MENU})
 
 
+def delete_user(request, email, pk):
+    team = Team.objects.get(id=pk)
+    user = User.objects.get(email=email)
+    team.user_id.remove(user)
+    team.save()
+    return redirect('team')
+
+
 def get_team_task(request, pk):
     team = Team.objects.get(id=pk)
     tasks = [task.__dict__ for task in Task.objects.filter(team=team)]

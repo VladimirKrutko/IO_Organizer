@@ -13,6 +13,7 @@
    {% for user in team.users %}
     <tr>
         <td>{{user.email}}</td>
+        <td> <a href="{% url 'delete_user' email=user.email pk=team.id %}">Delete</a></td>
     </tr>
     {% endfor %}
 </table>
