@@ -10,6 +10,7 @@
     <td>Content</td>
     <td>Executor</td>
     <td>Status</td>
+    <td>Team</td>
     {% for i in data%}
     <tr>
         <td>{{i.create_date}}</td>
@@ -17,6 +18,7 @@
         <td>{{i.content}}</td>
         <td>{{i.executor}}</td>
         <td>{{i.status}}</td>
+        <td>{{i.team}}</td>
         <td><a href="{% url 'update_task' i.id %}">Update</a></td>
         <td><a href="{% url 'delete_task' i.id %}">Delete</a></td>
     </tr>

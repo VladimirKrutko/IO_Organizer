@@ -25,6 +25,7 @@ class CreateTaskForm(forms.Form):
     status = forms.ChoiceField(choices=STATUS_CHOICES)
     content = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))
     end_date = forms.CharField(max_length=100)
+    team = forms.CharField(max_length=100)
 
 
 class UpdateTaskForm(forms.ModelForm):

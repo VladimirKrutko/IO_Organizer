@@ -120,7 +120,7 @@ def get_user_task(request):
     tasks = [task.__dict__ for task in Task.objects.filter(executor=request.user)]
     for i in tasks:
         i['executor'] = request.user.email
-
+        i['team'] = Team.objects.get(id=i['team_id']).name
     return render(request, 'task/task.html', {'data': tasks})
 
 
@@ -135,12 +135,16 @@ class TaskView(View):
 
     def post(self, request):
         form = CreateTaskForm(request.POST)
+        print(form.is_valid())
         if form.is_valid():
             executor = form.cleaned_data.get('executor')
             end_date = form.cleaned_data.get('end_date')
             user = User.objects.filter(email=executor)[0]
+            team_name = form.cleaned_data.get('team')
+            print(team_name)
+            team = Team.objects.get(name=team_name)
             Task(content=form.cleaned_data.get('content'), executor=user, status=form.cleaned_data.get('status'),
-                 end_data=datetime.strptime(end_date, '%m/%d/%y %H:%M')).save()
+                 end_data=datetime.strptime(end_date, '%m/%d/%y %H:%M'), team=team).save()
             return redirect('task')
         context = {
             'form': form

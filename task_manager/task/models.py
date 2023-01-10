@@ -80,6 +80,7 @@ class Task(models.Model):
     update_date = models.DateTimeField(auto_now_add=True)
     executor = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.CharField(max_length=100, choices=STATUS_CHOICES)
+    team = models.ForeignKey(Team, default=-1, on_delete=models.PROTECT, null=True)
 
     def __str__(self):
         return str(self.id)
