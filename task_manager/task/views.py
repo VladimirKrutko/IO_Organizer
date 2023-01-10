@@ -11,6 +11,18 @@ MENU = ['Tasks', 'Settings', 'Profile', 'Sign in', 'Sign out']
 def index(request):
     return render(request, 'task/base.html', {'menu': MENU})
 
+    # tasks = [task.__dict__ for task in Task.objects.filter(executor=request.user)]
+    # for i in tasks:
+    #     i['executor'] = request.user.email
+    #
+    # return render(request, 'task/task.html', {'data': tasks})
+
+
+def get_team_info(request):
+    teams = Team.objects.filter(user_id=request.user)
+    data = [{'name': team.name, 'users': [{'id': user.id, 'email': user.email} for user in team.user_id.all()]} for team in teams]
+    return render(request, 'task/team.html', {'data': data})
+
 
 class CreateTeamView(View):
     template_name = 'task/create_team.html'

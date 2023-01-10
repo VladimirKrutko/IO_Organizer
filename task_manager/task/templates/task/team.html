@@ -1,0 +1,22 @@
+{% extends "task/base.html" %}
+
+{% block content %}
+ <a href="{% url 'create_team'  %}">Create team</a>
+
+{% if user.is_authenticated %}
+ {% for team in data%}
+    <h1>Team Name: {{ team.name}}</h1>
+<table border = "1" cellpadding = "5" cellspacing = "5">
+    <td>Users</td>
+   {% for user in team.users %}
+    <tr>
+        <td>{{user.email}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endfor %}
+    {% else %}
+        <a href="{% url 'login' %}">Login</a> |
+        <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+{% endblock %}
