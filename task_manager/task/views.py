@@ -12,6 +12,15 @@ def index(request):
     return render(request, 'task/base.html', {'menu': MENU})
 
 
+def get_team_task(request, pk):
+    team = Team.objects.get(id=pk)
+    tasks = [task.__dict__ for task in Task.objects.filter(team=team)]
+    for i in tasks:
+        i['executor'] = request.user.email
+        i['team'] = Team.objects.get(id=i['team_id']).name
+    return render(request, 'task/task.html', {'data': tasks})
+
+
 class AddUserTeamView(View):
     template_name = 'task/add_user.html'
 

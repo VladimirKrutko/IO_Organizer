@@ -9,6 +9,7 @@ urlpatterns = [
     path('create_team', CreateTeamView.as_view(), name='create_team'),
     path('show_task', get_user_task, name='task'),
     path('show_team', get_team_info, name='team'),
+    path('team_task/<int:pk>', get_team_task, name='team_task'),
     path('add_user/<int:pk>/', AddUserTeamView.as_view(), name='add_user'),
     # path('task/<int:id>/', TaskView.as_view(), name='task'),
     path('update_task/<int:pk>/', UpdateTaskView.as_view(), name='update_task'),

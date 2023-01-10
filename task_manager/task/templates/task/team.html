@@ -6,7 +6,8 @@
 {% if user.is_authenticated %}
  {% for team in data%}
     <h1>Team Name: {{ team.name}}</h1>
-    <a href="{% url 'add_user' team.id %}" >Add user</a>
+    <a href="{% url 'add_user' team.id %}" >Add user </a> |
+    <a href="{% url 'team_task' team.id %}" > Team tasks</a>
 <table border = "1" cellpadding = "5" cellspacing = "5">
     <td>Users</td>
    {% for user in team.users %}
