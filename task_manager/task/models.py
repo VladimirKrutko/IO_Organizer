@@ -74,10 +74,10 @@ class Task(models.Model):
         ('D', 'Done'),
         ('P', 'Femme'),
         ('S', 'Stop'))
-    end_data = models.DateTimeField(default=timezone.now)
+    end_data = models.DateField(default=timezone.now)
     content = models.TextField()
-    create_date = models.DateTimeField(auto_now_add=True)
-    update_date = models.DateTimeField(auto_now_add=True)
+    create_date = models.DateField(auto_now_add=True)
+    update_date = models.DateField(auto_now_add=True)
     executor = models.ForeignKey(User, on_delete=models.PROTECT)
     status = models.CharField(max_length=100, choices=STATUS_CHOICES)
     team = models.ForeignKey(Team, default=-1, on_delete=models.PROTECT, null=True)

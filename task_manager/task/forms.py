@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import *
 from django.utils.translation import gettext_lazy as _
+from .widget import DateTimePickerInput
 
 User = get_user_model()
 
@@ -24,13 +25,7 @@ class CreateTaskForm(forms.Form):
     executor = forms.CharField(max_length=100)
     status = forms.ChoiceField(choices=STATUS_CHOICES)
     content = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))
-    end_date = forms.DateTimeField(
-        input_formats=['%d/%m/%Y %H:%M'],
-        widget=forms.DateTimeInput(attrs={
-            'class': 'form-control datetimepicker-input',
-            'data-target': '#datetimepicker1'
-        })
-    )
+    end_date = forms.DateField(widget=DateTimePickerInput)
     TEAM_CHOICES = [(obj[0], obj[0]) for obj in Team.objects.values_list('name')]
     team = forms.ChoiceField(choices = TEAM_CHOICES)
 
