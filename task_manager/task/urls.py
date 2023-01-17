@@ -15,6 +15,7 @@ urlpatterns = [
     # path('task/<int:id>/', TaskView.as_view(), name='task'),
     path('update_task/<int:pk>/', UpdateTaskView.as_view(), name='update_task'),
     path('delete_task/<int:pk>/', delete_task, name='delete_task'),
+    path('calendar/', CalendarView.as_view(), name='calendar')
 
 
 

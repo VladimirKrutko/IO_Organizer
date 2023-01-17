@@ -24,8 +24,15 @@ class CreateTaskForm(forms.Form):
     executor = forms.CharField(max_length=100)
     status = forms.ChoiceField(choices=STATUS_CHOICES)
     content = forms.CharField(widget=forms.Textarea(attrs={'cols': 60, 'rows': 10}))
-    end_date = forms.CharField(max_length=100)
-    team = forms.CharField(max_length=100)
+    end_date = forms.DateTimeField(
+        input_formats=['%d/%m/%Y %H:%M'],
+        widget=forms.DateTimeInput(attrs={
+            'class': 'form-control datetimepicker-input',
+            'data-target': '#datetimepicker1'
+        })
+    )
+    TEAM_CHOICES = [(obj[0], obj[0]) for obj in Team.objects.values_list('name')]
+    team = forms.ChoiceField(choices = TEAM_CHOICES)
 
 
 class UpdateTaskForm(forms.ModelForm):
