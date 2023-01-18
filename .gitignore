@@ -2,3 +2,4 @@ __pycache__/
 chat.db
 *.png
 *.puml
+carbon/
