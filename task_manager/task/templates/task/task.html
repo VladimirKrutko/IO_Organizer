@@ -33,7 +33,13 @@
   </div> -->
   {% endfor %}
   <a href="{% url 'create_task'  %}"><button type="button" class="btn btn-success">Create Task</button></a>
+  <div class="progress">
+    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ progres }}" aria-valuemin="0" aria-valuemax="100" style="width:100%;">
+    {{ progres }}%
+    </div>
+  </div>
     {% else %}
+
         <a href="{% url 'login' %}">Login</a> |
         <a href="{% url 'register' %}">Register</a>
     {% endif %}
