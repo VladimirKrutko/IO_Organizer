@@ -13,29 +13,12 @@
       <a href="{% url 'delete_task' i.id %}" class="btn btn-secondary">Delete task</a>
     </div>
 </div>
-  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Zadanie #{{i.id}}</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
+
   {% endfor %}
   <a href="{% url 'create_task'  %}"><button type="button" class="btn btn-success">Create Task</button></a>
   <div class="progress">
-    <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ progres }}" aria-valuemin="0" aria-valuemax="100" style="width:100%;">
-    {{ progres }}%
+    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" aria-valuenow="{{ progres }}" aria-valuemin="0" aria-valuemax="100" style="width:100%;">
+    {{ progres }}% Done
     </div>
   </div>
     {% else %}
