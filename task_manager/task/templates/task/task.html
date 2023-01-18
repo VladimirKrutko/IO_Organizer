@@ -1,31 +1,44 @@
 {% extends "task/base.html" %}
 
 {% block content %}
- <a href="{% url 'create_task'  %}">Create task</a>
+
 
 {% if user.is_authenticated %}
-<table border = "1" cellpadding = "5" cellspacing = "5">
-    <td>Start Date</td>
-    <td>End Date</td>
-    <td>Content</td>
-    <td>Executor</td>
-    <td>Status</td>
-    <td>Team</td>
-    {% for i in data%}
-    <tr>
-        <td>{{i.create_date}}</td>
-        <td>{{i.end_data}}</td>
-        <td>{{i.content}}</td>
-        <td>{{i.executor}}</td>
-        <td>{{i.status}}</td>
-        <td>{{i.team}}</td>
-        <td><a href="{% url 'update_task' i.id %}">Update</a></td>
-        <td><a href="{% url 'delete_task' i.id %}">Delete</a></td>
-    </tr>
-    {% endfor %}
-</table>
+{% for i in data%}
+<div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Task #{{i.id}}</h5>
+      <p class="card-text">Content: {{i.content}} <br> Start date: {{i.create_date}} <br> Deadline: {{i.end_data}} <br> Status: {{i.status}} </br> Team: {{i.team}}</p>
+      <a href="{% url 'update_task' i.id %}" class="btn btn-primary">Edit task</a>
+      <a href="{% url 'delete_task' i.id %}" class="btn btn-secondary">Delete task</a>
+    </div>
+</div>
+  <!-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Zadanie #{{i.id}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  {% endfor %}
+  <a href="{% url 'create_task'  %}"><button type="button" class="btn btn-success">Create Task</button></a>
     {% else %}
         <a href="{% url 'login' %}">Login</a> |
         <a href="{% url 'register' %}">Register</a>
     {% endif %}
+
+
+  
+
 {% endblock %}
