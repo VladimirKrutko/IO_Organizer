@@ -30,7 +30,11 @@ def get_team_task(request, pk):
     for i in tasks:
         i['executor'] = request.user.email
         i['team'] = Team.objects.get(id=i['team_id']).name
-    return render(request, 'task/task.html', {'data': tasks})
+    if len(tasks) == 0:
+        progress = 0
+    else:
+        progress = round((len([t for t in tasks if t['status'] == 'D']) / len(tasks)) * 100)
+    return render(request, 'task/task.html', {'data': tasks, 'progres': str(progress)})
 
 
 class AddUserTeamView(View):
@@ -63,6 +67,7 @@ def get_team_info(request):
     teams = Team.objects.filter(user_id=request.user)
     data = [{'name': team.name, 'id': team.id, 'users': [{'id': user.id, 'email': user.email}
                                                          for user in team.user_id.all()]} for team in teams]
+    # progress =
     return render(request, 'task/team.html', {'data': data})
 
 
@@ -142,7 +147,11 @@ def get_user_task(request):
     for i in tasks:
         i['executor'] = request.user.email
         i['team'] = Team.objects.get(id=i['team_id']).name
-    return render(request, 'task/task.html', {'data': tasks})
+    if len(tasks) == 0:
+        progress = 0
+    else:
+        progress = round((len([t for t in tasks if t['status'] == 'D']) / len(tasks)) * 100)
+    return render(request, 'task/task.html', {'data': tasks, 'progres': str(progress)})
 
 
 class TaskView(View):
@@ -165,7 +174,7 @@ class TaskView(View):
             print(team_name)
             team = Team.objects.get(name=team_name)
             Task(content=form.cleaned_data.get('content'), executor=user, status=form.cleaned_data.get('status'),
-                 end_data=datetime.strptime(end_date, '%m/%d/%y %H:%M'), team=team).save()
+                 end_data=end_date, team=team).save()
             return redirect('task')
         context = {
             'form': form

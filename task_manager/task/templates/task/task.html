@@ -3,7 +3,9 @@
 {% block content %}
  <a href="{% url 'create_task'  %}">Create task</a>
 
+
 {% if user.is_authenticated %}
+ <p> Progress: {{ progres }} %</p>
 <table border = "1" cellpadding = "5" cellspacing = "5">
     <td>Start Date</td>
     <td>End Date</td>
