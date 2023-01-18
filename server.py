@@ -4,50 +4,54 @@ from fastapi.websockets import WebSocket, WebSocketDisconnect
 
 import sqlite3
 
+class Database:
 
-conn = sqlite3.connect('chat.db')
-cursor = conn.cursor()
-
-
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS messages (
-    id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    server TEXT,
-    username TEXT,
-    message TEXT
-)
-''')
+    def __init__(self):
+        self.conn = sqlite3.connect('chat.db')
+        self.cursor = self.conn.cursor()
 
 
-def add_message(server, username, message):
-    cursor.execute('''
-        INSERT INTO messages (server, username, message)
-        VALUES (?, ?, ?)
-    ''', (server, username, message))
-    conn.commit()
 
-def get_last_messages(server, count=25):
-    # Fetch the last count messages from the messages table
-    cursor.execute('''
-        SELECT *
-        FROM messages
-        WHERE server = ?
-        ORDER BY id DESC
-        LIMIT ?
-    ''', (server, count))
-    return cursor.fetchall()[::-1]
+        self.cursor.execute('''
+        CREATE TABLE IF NOT EXISTS messages (
+            id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            server TEXT,
+            username TEXT,
+            message TEXT
+        )
+        ''')
 
-def get_messages_before(server, message_id, count=25):
-    cursor.execute('''
-        SELECT *
-        FROM messages
-        WHERE id < ? AND server = ?
-        ORDER BY id DESC
-        LIMIT 25
-    ''', (message_id, server))
-    return cursor.fetchall()
+
+    def add_message(self, server, username, message):
+        self.cursor.execute('''
+            INSERT INTO messages (server, username, message)
+            VALUES (?, ?, ?)
+        ''', (server, username, message))
+        self.conn.commit()
+
+    def get_last_messages(self, server, count=25):
+        # Fetch the last count messages from the messages table
+        self.cursor.execute('''
+            SELECT *
+            FROM messages
+            WHERE server = ?
+            ORDER BY id DESC
+            LIMIT ?
+        ''', (server, count))
+        return self.cursor.fetchall()[::-1]
+
+    def get_messages_before(self, server, message_id, count=25):
+        self.cursor.execute('''
+            SELECT *
+            FROM messages
+            WHERE id < ? AND server = ?
+            ORDER BY id DESC
+            LIMIT 25
+        ''', (message_id, server))
+        return self.cursor.fetchall()
 
 app = FastAPI()
+db = Database()
 
 @app.get("/{server}/{user}")
 async def get_index(request: Request, server: str, user: str):
@@ -71,7 +75,7 @@ async def chat(websocket: WebSocket):
         servers[server] = []
     servers[server].append(websocket)
 
-    last = get_last_messages(server)
+    last = db.get_last_messages(server)
     print(last)
     for item in last:
         await websocket.send_json({"user": item[2], "message": item[3], "end": True})
@@ -80,11 +84,11 @@ async def chat(websocket: WebSocket):
         while True:
             data = await websocket.receive_json()
             if data["type"] == "message":
-                add_message(server, user, data["message"])
+                db.add_message(server, user, data["message"])
                 for client in servers[server]:
                     await client.send_json({"user": user, "message": data["message"], "end": True})
             else:
-                for message in get_messages_before(server, data["message_id"]):
+                for message in db.get_messages_before(server, data["message_id"]):
                     await websocket.send_json({"user": message[2], "message": message[3], "end": False})
     except WebSocketDisconnect:
         servers[server].remove(websocket)
