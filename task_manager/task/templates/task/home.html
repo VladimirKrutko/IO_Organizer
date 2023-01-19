@@ -1,0 +1,15 @@
+{% extends 'task/base.html' %}
+
+{% block content %}
+<script>
+    $(document).ready(function(){
+      $('#welcomeText').hide().delay(1000).fadeIn('slow');
+      $('#welcomeLogo').hide().delay(1500).fadeIn('slow');
+    });
+</script>
+
+<div class="my-table">
+    <div class="welcome-text" id="welcomeText">Welcome to</div>
+    <div class="welcome-logo" id="welcomeLogo"><img src="https://i.imgur.com/U6wa3az.png" alt="logo" width="800px" height="377px"></div>
+</div>
+{% endblock %}

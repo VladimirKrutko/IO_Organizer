@@ -1,0 +1,55 @@
+{% extends "task/base.html" %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+ {% for team in data%}
+ <div class="card" style="width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">Team name: {{team.name}}</h5>
+      {% for user in team.users %}
+      <p class="card-text">Users:<br> {{user.email}} <a href="" class="btn btn-danger">Delete</a> <br> </p>
+      {% endfor %}
+      <a href="{% url 'add_user' team.id %}" class="btn btn-primary">Add user</a>
+      <a href="{% url 'team_task' team.id %}" class="btn btn-primary">Team tasks</a>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#{{team.name}}">Open team chat</button>
+    </div>
+</div>
+<div class="modal fade" id="{{team.name}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Chat {{team.name}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <iframe>http://skaner.site/{{team.name}}/{{user.email}}</iframe>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+    <!-- <h1>Team Name: {{ team.name}}</h1>
+    <a href="{% url 'add_user' team.id %}" >Add user </a> |
+    <a href="{% url 'team_task' team.id %}" > Team tasks</a>
+<table border = "1" cellpadding = "5" cellspacing = "5">
+    <td>Users</td>
+   {% for user in team.users %}
+    <tr>
+        <td>{{user.email}}</td>
+        <td> <a href="{% url 'delete_user' email=user.email pk=team.id %}">Delete</a></td>
+    </tr> -->
+    {% endfor %}
+    {% endfor %}
+    <a href="{% url 'create_team'  %}" class="btn btn-success">Create team</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a> |
+        <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+{% endblock %}
